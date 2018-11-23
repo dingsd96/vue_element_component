@@ -57,34 +57,3 @@ export default{
     }
   }
 </style>
-
-<style lang="stylus" rel="stylesheet/stylus">
-  body{
-    padding 0
-    margin 0
-  }
-
-  .el-submenu__title,
-  .el-menu-item-group__title,
-  .el-menu-item{
-    background-color #001629
-  }
-
-  .el-submenu__title:hover,
-  .el-menu-item:hover,
-  .el-menu-item:focus,
-  .el-menu-item.is-active,
-  .about:hover{
-    background-color #253138
-    position relative
-    &:after{
-      content: ''
-      width 4px
-      height 100%
-      position absolute
-      left 0
-      top 0
-      background-color #1790ff
-    }
-  }
-</style>

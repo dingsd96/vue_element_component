@@ -1,3 +1,6 @@
+.el-menu{
+  border 0
+}
 
 .el-submenu__title,
 .el-menu-item-group__title,
@@ -5,11 +8,17 @@
   background-color #001629
 }
 
+.el-menu-item,
+.el-submenu__title{
+  i{
+    color white
+  }
+}
+
 .el-submenu__title:hover,
 .el-menu-item:hover,
 .el-menu-item:focus,
-.el-menu-item.is-active,
-.about:hover{
+.el-menu-item.is-active :hover{
   background-color #253138
   position relative
   &:after{

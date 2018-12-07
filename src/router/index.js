@@ -7,8 +7,39 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/home'
+    },
+    /*
+    * 非法路径跳转到404
+    * 听说这个要放到最后面
+    * 但我放这里好像暂时也没出现什么问题o(ﾟДﾟ)っ！
+    * */
+    {
+      path: '*',
+      redirect: '/404'
+    },
+    /*
+    * import 默认找路径下的 index.js 文件
+    * 如果不是引用 index.js 文件则需要把文件路径写全
+    * !!!!!!!!!!!!!!!!!! 记得写后缀 !!!!!!!!!!!!!!!!!!!!
+    * */
+    {
+      path: '/home',
       name: 'home',
-      component: () => import('@/view/home/home')
+      component: () => import('../view/home'),
+      children: [
+        {
+          path: 'component/table',
+          name: 'component',
+          component: () => import('../view/home/component/table')
+        }
+      ]
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import('../view/404')
     }
+
   ]
 })

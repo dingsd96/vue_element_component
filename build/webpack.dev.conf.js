@@ -52,10 +52,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
+    /*
+    * 图片需要ico格式 在根目录下
+    * 记得重新 run
+    * */
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      favicon: path.resolve('logo.ico')
     }),
     // copy custom static assets
     new CopyWebpackPlugin([

@@ -9,11 +9,14 @@ import ElementUI from '@/config/elementUiConfig.js'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/styles/index.styl'
 
-// iconfont
+// iconFont全局注册
 import '@/assets/iconfont/iconfont.css'
 
+// filter全局注册
+import filters from './utils/filters'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
+Vue.prototype.filters = filters
 
 /* eslint-disable no-new */
 new Vue({

@@ -72,7 +72,7 @@ export default home
     align-items center
     cursor pointer
     img{
-      padding-right 10px
+      margin-right 10px
     }
   }
   .leftMenuContainer{

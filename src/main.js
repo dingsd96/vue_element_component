@@ -14,9 +14,13 @@ import '@/assets/iconfont/iconfont.css'
 
 // filter全局注册
 import filters from './utils/filters'
+
+// Axios
+import Api from './utils/Axios'
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.prototype.filters = filters
+Vue.prototype.Api = Api
 
 /* eslint-disable no-new */
 new Vue({
@@ -24,5 +28,6 @@ new Vue({
   router,
   render: h => h(App),
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  Api
 })

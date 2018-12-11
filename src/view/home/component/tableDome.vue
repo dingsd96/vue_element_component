@@ -64,7 +64,16 @@ export default {
     }
   },
 
+  mounted () {
+    this.test()
+  },
+
   methods: {
+    test () {
+      this.Api.get('user/findById?id=2').then(res => {
+
+      })
+    },
     /*
     * 新增按钮的回调函数
     * row 里面为整行的信息

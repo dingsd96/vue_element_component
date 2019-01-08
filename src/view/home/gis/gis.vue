@@ -4,7 +4,10 @@
     <div class="buttons">
       <el-button @click="initMap">加载地图</el-button>
       <el-switch v-model="overviewMapFlag" @change="overviewMap"></el-switch>
-      <el-button @click="pointClustering">聚合图层</el-button>
+      <el-button @click="drawALine">画一条线</el-button>
+      <el-button @click="deleteSymbol">清空</el-button>
+
+      <br/><el-button @click="pointClustering">聚合图层</el-button>
     </div>
     <Gis ref="gis"
          :gisURL="gisApiURL"
@@ -16,6 +19,7 @@
          @getRange="getRange"
          @getClusteringDataCal="getClusteringDataCal"
          @clusterGraphicOnclickCalFun="clusterGraphicOnclickCalFun"
+         @drawALineCal="drawALineCal"
     />
   </div>
 </template>
@@ -30,7 +34,7 @@ export default gis
     height 100%
     background-color white
     .map{
-      height 80%
+      height 90%
       position relative
     }
     .buttons{

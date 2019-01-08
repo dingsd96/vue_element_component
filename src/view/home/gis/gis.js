@@ -29,7 +29,7 @@ export default {
       this.gis.initMap(
         'map', // 地图显示的控件id
         {
-          point: {longitude: 113.3221, latitude: 23.1631} // 地图显示的中心点左边
+          point: {longitude: 113.3221, latitude: 23.1631} // 地图显示的中心点坐标
           // url: this.mapServer // 地图服务的路径
         }
       )
@@ -85,8 +85,24 @@ export default {
       this.gis.pointClustering(data)
     },
     // 点击聚合点的回调
-    clusterGraphicOnclickCalFun () {
+    clusterGraphicOnclickCalFun (data) {
+      console.log('clusterGraphicOnclickCalFun---------------------------', data)
+    },
 
+    // 画一条线
+    drawALine () {
+      this.gis.drawALine({calculate: true, show: true})
+    },
+
+    // 画线的回调
+    drawALineCal (data) {
+      console.log('drawALineCal---------------------------', data)
+      this.gis.cleanToolbar()
+    },
+
+    // 清空
+    deleteSymbol () {
+      this.gis.deleteSymbol()
     }
 
   },

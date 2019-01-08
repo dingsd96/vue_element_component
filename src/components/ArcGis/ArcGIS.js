@@ -52,7 +52,7 @@ export default {
             reject(new Error('加载地图模块失败'))
           }
         }).then(() => {
-          window.serverPath = this.gisURL
+          window.gisServerPath = this.gisURL
           this.getGisApi()
         }).catch((res) => {
           console.log(res)
@@ -146,11 +146,16 @@ export default {
      */
     pointClustering (data) {
       this.gis.pointClustering(data)
-      this.gis.subscribeEvent('clusterGraphicOnclickCalFun', this.clusterGraphicOnclickCalFun)
+      this.gis.subscribeEvent('clusterGraphicOnclickCalFun', event => {
+        this.$emit('clusterGraphicOnclickCalFun', event)
+      })
     },
-    // 鼠标点击聚合点的回调
-    clusterGraphicOnclickCalFun (event) {
-      this.$emit('clusterGraphicOnclickCalFun', event)
+
+    // 增加点击地图的回调事件，返回点击的event数据
+    mapClick () {
+      this.gis.subscribeEvent('mapClick', event => {
+        this.$emit('mapClick', event)
+      })
     },
 
     /**

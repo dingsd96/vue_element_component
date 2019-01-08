@@ -5,7 +5,7 @@
       <!-- 使用 route-link 标签会有样式问题 -->
       <!-- <router-link to="/home"></router-link> -->
       <div class="leftTitle" @click="handleLogoClick">
-        <img src="@static/images/logo.png" height="32" width="32"/>
+        <img class="logoImg" src="@static/images/logo.png" width="32px"/>
         <span v-if="!collapseFlag">this is title</span>
       </div>
       <el-menu
@@ -64,21 +64,22 @@ export default home
 .homeContainer{
   height 100vh
   /* 左边 */
-  .leftTitle{
-    height 64px
-    background-color #002240
-    padding-left 20px
-    display flex
-    align-items center
-    cursor pointer
-    img{
-      margin-right 10px
-    }
-  }
   .leftMenuContainer{
     border none
     background-color #001629
     color #fff
+    .leftTitle{
+        height 64px
+        background-color #002240
+        padding-left 20px
+        display flex
+        align-items center
+        cursor pointer
+        logoImg{
+          margin-right 10px
+          width 32px !important
+        }
+      }
     .leftMenu{
       background-color #001629
       .menuTitle {

@@ -32,6 +32,11 @@ export default new Router({
           path: 'component/table',
           name: 'component',
           component: () => import('../view/home/component/tableDome.vue')
+        },
+        {
+          path: 'gis/gis',
+          name: 'gis',
+          component: () => import('../view/home/gis')
         }
       ]
     },

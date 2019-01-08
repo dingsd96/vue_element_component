@@ -10,8 +10,8 @@ export default {
       // 分页数据
       pagination: {
         total: 0, // 总数
-        currentPage: 0, // 当前页
-        pageSize: 0 // 每页显示数
+        currentPage: 1, // 当前页
+        pageSize: 10 // 每页显示数
       }
     }
   },
@@ -21,6 +21,16 @@ export default {
       type: Boolean,
       default: true
     },
+    // 表格中数据的获取
+    apiParameter: {
+      type: Object,
+      default: function () {
+        return {
+
+        }
+      }
+    },
+    // 表格中显示的配置
     tableColumns: {
       type: Array,
       default: function () {
@@ -45,23 +55,36 @@ export default {
     clipboard.on('error', (e) => {
       this.$message({message: e, type: 'error'})
     })
-    this.getTableData()
+    // this.getTableData()
   },
 
   methods: {
     // 获取表格中的数据
     getTableData () {
-      // 自己构造的假数据(￣▽￣)／
-      this.dataList = [{
-        label1: '栏目1-1',
-        label2: '栏目1-2',
-        copy: '12345467899'
-      }, {
-        label1: '新增按钮被过滤了',
-        label2: '这栏文字超过长度了，超出部分会隐藏，在鼠标放上去之后才显示所有的内容',
-        copy: '9876543211'
+      const params = {
+        pageNum: this.pagination.currentPage,
+        pageSize: this.pagination.pageSize
       }
-      ]
+      this.Api.get(this.apiParameter.url, {
+        params: Object.assign(params, this.apiParameter.params)
+      }).then(res => {
+        this.dataList = res.data
+      })
+      // 自己构造的假数据(￣▽￣)／
+      /* this.dataList = [{
+          name: '张三',
+          age: 18,
+          type: 1,
+          phoneNum: '13627020000',
+          rmk: ''
+        }, {
+          name: '李四',
+          age: 17,
+          type: 2,
+          phoneNum: '13600000000',
+          rmk: ''
+        }
+        ] */
     },
     // 操作
     callback (data, calFun) {

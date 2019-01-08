@@ -17,6 +17,7 @@
           <template slot-scope="scope">
             <!-- 拷贝类型 -->
             <div v-if="item.type === 'copy'" >
+              <!-- 抬头一片苍茫月，是我生生不死心 -->
               <el-tooltip effect="dark" :content="filters(item.filter,(scope.row[item.key]))" placement="top">
                 <!-- 使用了clipboard，.copy用来识别是需要复制的DOM -->
                 <el-button
@@ -31,7 +32,7 @@
             <!-- 按钮类型 -->
             <div v-else-if="item.type === 'btn'">
               <span v-for="(op,index) in item.options" :key="index" >
-                <!-- 不存在showFun则为显示，存在showFun则判断showFun(scope.row)的返回值时候为true -->
+                <!-- 不存在showFun则为显示，存在showFun则判断showFun(scope.row)的返回值是否为true -->
                 <el-button v-if="!op.showFun || op.showFun(scope.row)"
                            class="tableTexBtn"
                            size="mini"
@@ -43,7 +44,7 @@
             </div>
             <!-- 普通类型 -->
             <div v-else>
-              <!-- 不存在则不显示，不然会显示null或者undefined -->
+              <!-- 不存在则不显示，否则会显示null或者undefined -->
               <TableTooltip v-if="scope.row[item.key]" :content="filters(item.filter,(scope.row[item.key]))" ></TableTooltip>
             </div>
           </template>

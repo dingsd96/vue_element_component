@@ -2,7 +2,7 @@
   <span @mouseenter="handleMouseEnter($event)">
     <el-tooltip
       :disabled="showTooltip"
-      :content="content"
+      :content="content+''"
       :open-delay = "666"
       placement="top">
       <span>{{ content }}</span>
@@ -14,6 +14,17 @@
 export default {
   name: 'TableTooltip',
   props: {
+    /*
+    * 设置格式为数字或字符串类型
+    * 但al-tooltip只接收字符串
+    * 我能怎么办
+    * 我也很无奈呀
+    * 还是要在赋值的时候强行变成字符串╮(╯﹏╰）╭
+    * 但为什么我这里还要设置接收两种类型的值呢
+    * ‘抬头一片苍茫月，是我生生不死心’
+    * 对
+    * 就是我不死心
+    * */
     content: [String, Number]
   },
 

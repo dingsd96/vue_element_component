@@ -2,7 +2,8 @@
   <div class="tableDomeContainer">
     <DTable
       :tableColumns = tableColumns
-      @handleAdd = "handleAdd"
+      :apiParameter = apiParameter
+      @handleView = "handleView"
       @handleEdit = "handleEdit"
       @handleDelete = "handleDelete">
     </DTable>
@@ -18,68 +19,73 @@ export default {
   },
   data () {
     return {
-      tableColumns: [{
+      // 传入table组件中的配置信息
+      tableColumns: [
+        {
         // 该列的标签名
-        label: '栏目一',
-        // 对应的数据key值
-        key: 'label1'
-      }, {
-        label: '栏目二',
-        key: 'label2',
-        // 数据过滤的函数名
-        filter: 'test'
-      }, {
-        label: '复制',
-        key: 'copy',
-        // copy类型列
-        type: 'copy'
-      }, {
-        label: '操作',
-        // btn类型列
-        type: 'btn',
-        // 使用options 存放按钮列表
-        options: [{
-          title: '新增',
-          /*
+          label: '姓名',
+          // 对应的数据key值
+          key: 'name'
+        },
+        {
+          label: '年龄',
+          key: 'age'
+        },
+        {
+          label: '状态',
+          key: 'type',
+          // 数据过滤的函数名
+          filter: 'tableType'
+        },
+        {
+          label: '电话',
+          key: 'phoneNumber',
+          // copy类型列
+          type: 'copy'
+        },
+        {
+          label: '操作',
+          // btn类型列
+          type: 'btn',
+          // 使用options 存放按钮列表
+          options: [{
+            title: '查看',
+            /*
           * 该按钮显示隐藏的判断函数
           * 不加这个函数默认为显示
           * @param row 这一行的数据
           * @returns Boolean
           * */
-          showFun: (row) => {
-            return !(row.label1 === '新增按钮被过滤了')
-          },
-          // 按钮的回调函数名
-          calFun: 'handleAdd'
-        }, {
-          title: '修改',
-          calFun: 'handleEdit'
-        }, {
-          title: '删除',
-          calFun: 'handleDelete'
+            showFun: (row) => {
+              return true
+            },
+            // 按钮的回调函数名
+            calFun: 'handleView'
+          }, {
+            title: '修改',
+            calFun: 'handleEdit'
+          }, {
+            title: '删除',
+            calFun: 'handleDelete'
+          }
+          ]
         }
-        ]
+      ],
+      // 传入table组件中的数据获取地址
+      apiParameter: {
+        url: 'component/table/select'
       }
-      ]
     }
   },
 
-  mounted () {
-    this.test()
-  },
-
   methods: {
-    test () {
-      this.Api.get('user/findById?id=2').then(res => {
 
-      })
-    },
     /*
     * 新增按钮的回调函数
     * row 里面为整行的信息
     * */
-    handleAdd (row) {
-      this.$confirm(row, '新增按钮的回调')
+    handleView (row) {
+      this.$confirm(row, '查看按钮的回调')
     },
     // 修改按钮的回调函数 同上
     handleEdit (row) {

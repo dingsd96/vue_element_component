@@ -11,10 +11,11 @@
     </div>
     <Gis ref="gis"
          :gisURL="gisApiURL"
-         :mapServer="mapServer"
+         :MapService="MapService"
          :GeometryService="GeometryService"
          :RouteTaskService="RouteTaskService"
          :FindTaskService="FindTaskService"
+         :position="position"
          @initCompleted="initCompleted"
          @getRange="getRange"
          @getClusteringDataCal="getClusteringDataCal"

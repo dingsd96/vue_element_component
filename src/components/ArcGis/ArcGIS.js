@@ -11,7 +11,7 @@ export default {
       type: String,
       default: '192.168.2.36:83/arcGis3.24'
     },
-    mapServer: { // 地图服务路径
+    MapService: { // 地图服务路径
       type: String,
       default: 'http://192.168.2.178:6080/arcgis/rest/services/gzMap18/MapServer'
     },
@@ -26,6 +26,12 @@ export default {
     FindTaskService: { // 寻路服务路径
       type: String,
       default: 'http://192.168.2.178:6080/arcgis/rest/services/gzRouteName/MapServer'
+    },
+    position: {
+      type: Object,
+      default: () => {
+        return {x: 0, y: 0}
+      }
     }
   },
 
@@ -60,19 +66,24 @@ export default {
       }
     },
 
-    // 将文件中的api放到这个组件中 并 通知父组件该组件已加载完成
+    // 将文件中的api放到这个组件中, 赋予默认值 并 通知父组件该组件已加载完成
     getGisApi () {
       window.ArcGIS((res) => {
         this.gis = res
-        this.gis.mapServer = this.mapServer
+        this.gis.MapService = this.MapService
         this.gis.GeometryService = this.GeometryService
         this.gis.RouteTaskService = this.RouteTaskService
         this.gis.FindTaskService = this.FindTaskService
+        this.gis.position = this.position
       })
       this.$emit('initCompleted')
     },
 
-    // 初始化地图
+    /**
+     * 初始化地图
+     * @param id String 用来显示地图的元素id
+     * @param data {Point:{}} 显示的中心点的坐标
+     */
     initMap (id, data) {
       this.gis.initMap(id, data, this.getRange)
     },

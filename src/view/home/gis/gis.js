@@ -1,9 +1,14 @@
+/**
+ *
+ */
+
 import Gis from '@/components/ArcGis'
 export default {
   name: 'gis',
   data () {
     return {
-      gisApiURL: '192.168.2.36:83/arcGis3.24',
+      gisApiURL: 'http://192.168.2.36:83/arcGis3.24/3.24/main.js',
+      gisServerPath: 'http://192.168.2.36:83/arcGis3.24',
       MapService: 'http://192.168.2.178:6080/arcgis/rest/services/gzMap18/MapServer',
       GeometryService: 'http://192.168.2.178:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer',
       RouteTaskService: 'http://192.168.2.36:6080/arcgis/rest/services/vecMapRoad/NAServer/%E8%B7%AF%E5%BE%84',

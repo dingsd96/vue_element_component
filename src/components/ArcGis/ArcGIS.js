@@ -7,9 +7,13 @@ export default {
   },
 
   props: {
-    gisURL: { // 地图服务路径
+    gisURL: { // gisApi文件路径
       type: String,
-      default: '192.168.2.36:83/arcGis3.24'
+      default: 'http://192.168.2.36:83/arcGis3.24/3.24/main.js'
+    },
+    gisServerPath: { // gis服务
+      type: String,
+      default: 'http://192.168.2.36:83/arcGis3.24'
     },
     MapService: { // 地图服务路径
       type: String,
@@ -49,7 +53,7 @@ export default {
         new Promise((resolve, reject) => {
           let script = document.createElement('script')
           script.type = 'text/javascript'
-          script.src = 'http://' + this.gisURL + '/3.24/main.js'
+          script.src = this.gisURL
           document.body.appendChild(script)
           script.onload = () => {
             resolve()
@@ -58,10 +62,10 @@ export default {
             reject(new Error('加载地图模块失败'))
           }
         }).then(() => {
-          window.gisServerPath = this.gisURL
+          window.gisServerPath = this.gisServerPath
           this.getGisApi()
         }).catch((res) => {
-          console.log(res)
+          this.$emit('initError', res)
         })
       }
     },

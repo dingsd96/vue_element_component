@@ -11,6 +11,7 @@
     </div>
     <Gis ref="gis"
          :gisURL="gisApiURL"
+         :gisServerPath="gisServerPath"
          :MapService="MapService"
          :GeometryService="GeometryService"
          :RouteTaskService="RouteTaskService"

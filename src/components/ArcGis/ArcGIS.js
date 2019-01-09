@@ -37,6 +37,7 @@ export default {
         return {x: 0, y: 0}
       }
     }
+
   },
 
   mounted () {
@@ -79,8 +80,8 @@ export default {
         this.gis.RouteTaskService = this.RouteTaskService
         this.gis.FindTaskService = this.FindTaskService
         this.gis.position = this.position
+        this.$emit('initCompleted')
       })
-      this.$emit('initCompleted')
     },
 
     /**
@@ -101,6 +102,18 @@ export default {
       this.$emit('getRange', data)
     },
 
+    // 设置层级
+    setZoom (level) {
+      this.gis.setZoom(level)
+    },
+
+    // 监听鼠标移动事件
+    mouseOver () {
+      this.gis.subscribeEvent('mouseMove', event => {
+        this.$emit('mouseMoveCal', event)
+      })
+    },
+
     /**
      * 鹰眼图开关
      * @param flag true:打开， false:关闭
@@ -115,8 +128,7 @@ export default {
      * @returns [Array] 经纬度坐标数组的数组
      */
     mercator2LatLng (mercator) {
-      const returns = this.gis.mercator2LatLng(mercator)
-      this.$emit('mercator2LatLngCal', returns)
+      return this.gis.mercator2LatLng(mercator)
     },
 
     /**
@@ -150,8 +162,7 @@ export default {
      * @returns [[Obj]]
      */
     getClusteringData (arrays, distance) {
-      const returns = this.gis.getClusteringData(arrays, distance)
-      this.$emit('getClusteringDataCal', returns)
+      return this.gis.getClusteringData(arrays, distance)
     },
 
     /**
@@ -160,10 +171,11 @@ export default {
      * @param data [[Obj]]
      */
     pointClustering (data) {
-      this.gis.pointClustering(data)
+      const pointClusteringGraphic = this.gis.pointClustering(data)
       this.gis.subscribeEvent('clusterGraphicOnclickCalFun', event => {
         this.$emit('clusterGraphicOnclickCalFun', event)
       })
+      return pointClusteringGraphic
     },
 
     // 增加点击地图的回调事件，返回点击的event数据

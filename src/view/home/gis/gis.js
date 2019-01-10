@@ -1,7 +1,3 @@
-/**
- *
- */
-
 import Gis from '@/components/ArcGis'
 export default {
   name: 'gis',

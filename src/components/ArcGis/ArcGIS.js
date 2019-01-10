@@ -36,7 +36,7 @@ export default {
       default: () => {
         return {x: 0, y: 0}
       }
-    }
+    },
 
   },
 
@@ -103,15 +103,15 @@ export default {
     },
 
     // 设置层级
-    setZoom (level) {
+    setZoom(level){
       this.gis.setZoom(level)
     },
 
     // 监听鼠标移动事件
-    mouseOver () {
-      this.gis.subscribeEvent('mouseMove', event => {
-        this.$emit('mouseMoveCal', event)
-      })
+    mouseOver(){
+      this.gis.subscribeEvent('mouseMove',(event=>{
+        this.$emit('mouseMoveCal',event)
+      }))
     },
 
     /**
@@ -273,6 +273,13 @@ export default {
       }, data)
     },
 
+    // 测距功能
+    ranging (data) {
+      this.gis.ranging((data, distance) => {
+        this.$emit('rangingCal', data, distance)
+      }, data)
+    },
+
     /**
      * 画一个圆
      * @param data symbol的样式属性
@@ -346,6 +353,20 @@ export default {
     // 删除路径
     routeClearRoutes () {
       this.gis.routeClearRoutes()
+    },
+
+    // 通过路名查找路的信息
+    findRoad(searchText){
+      this.gis.findRoad(searchText,res=>{
+        this.$emit('findRoadCal',res)
+      })
+    },
+
+    // 显示路的信息
+    showResultsRoad(results){
+      this.gis.showResultsRoad(results,res=>{
+        this.$emit('showResultsRoadCal',res)
+      })
     },
 
     /**

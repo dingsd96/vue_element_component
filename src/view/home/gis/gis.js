@@ -7,7 +7,7 @@ export default {
       gisServerPath: 'http://192.168.2.36:83/arcGis3.24',
       MapService: 'http://192.168.2.178:6080/arcgis/rest/services/gzMap18/MapServer',
       GeometryService: 'http://192.168.2.178:6080/arcgis/rest/services/Utilities/Geometry/GeometryServer',
-      RouteTaskService: 'http://192.168.2.36:6080/arcgis/rest/services/vecMapRoad/NAServer/%E8%B7%AF%E5%BE%84',
+      RouteTaskService: 'http://192.168.2.178:6080/arcgis/rest/services/gzMapNaServe/NAServer/%E8%B7%AF%E5%BE%84',
       FindTaskService: 'http://192.168.2.178:6080/arcgis/rest/services/gzRouteName/MapServer',
       position: {x: 276, y: 80},
       gis: {},

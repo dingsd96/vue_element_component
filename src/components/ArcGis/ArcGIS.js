@@ -7,13 +7,17 @@ export default {
   },
 
   props: {
+    mapCss:{ // gisCss
+      type: String,
+      default: 'http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css'
+    },
     gisURL: { // gisApi文件路径
       type: String,
-      default: 'http://192.168.2.36:83/arcGis3.24/3.24/main.js'
+      default: 'http://192.168.2.178:83/arcGis3.24/3.24/main.js'
     },
     gisServerPath: { // gis服务
       type: String,
-      default: 'http://192.168.2.36:83/arcGis3.24'
+      default: 'http://192.168.2.178:83/arcGis3.24'
     },
     MapService: { // 地图服务路径
       type: String,
@@ -25,7 +29,7 @@ export default {
     },
     RouteTaskService: { // 路线规划服务路径
       type: String,
-      default: 'http://192.168.2.36:6080/arcgis/rest/services/vecMapRoad/NAServer/%E8%B7%AF%E5%BE%84'
+      default: 'http://192.168.2.178:6080/arcgis/rest/services/gzMapNaServe/NAServer/%E8%B7%AF%E5%BE%84'
     },
     FindTaskService: { // 寻路服务路径
       type: String,
@@ -41,17 +45,33 @@ export default {
   },
 
   mounted () {
-    this.getScript()
+    this.init()
   },
 
   methods: {
-    // 加载gisApi的文件
-    getScript () {
+    // 初始化
+    init () {
       // 如果已经加载了这个文件
       if (window.ArcGIS) {
         this.getGisApi()
       } else {
-        new Promise((resolve, reject) => {
+        // 获取css
+        let getCss =  new Promise((resolve, reject) => {
+          let head = document.getElementsByTagName('head')[0];
+          let mapCss = document.createElement('link')
+          mapCss.href = this.mapCss
+          mapCss.type='text/css'
+          mapCss.rel = 'stylesheet'
+          mapCss.onload = () => {
+            resolve()
+          }
+          mapCss.onerror = () => {
+            reject(new Error('加载地图js模块失败'))
+          }
+          head.appendChild(mapCss)
+        })
+        // 获取js
+        let getScript = new Promise((resolve, reject) => {
           let script = document.createElement('script')
           script.type = 'text/javascript'
           script.src = this.gisURL
@@ -60,12 +80,15 @@ export default {
             resolve()
           }
           script.onerror = () => {
-            reject(new Error('加载地图模块失败'))
+            reject(new Error('加载地图css模块失败'))
           }
-        }).then(() => {
+        })
+
+        let promiseArr = [getCss,getScript]
+        Promise.all(promiseArr).then(() => {
           window.gisServerPath = this.gisServerPath
           this.getGisApi()
-        }).catch((res) => {
+        }).catch(() => {
           this.$emit('initError', res)
         })
       }
@@ -181,7 +204,7 @@ export default {
     // 增加点击地图的回调事件，返回点击的event数据
     mapClick () {
       this.gis.subscribeEvent('mapClick', event => {
-        this.$emit('mapClick', event)
+        this.$emit('mapClickCal', event)
       })
     },
 
@@ -193,8 +216,7 @@ export default {
      * @param infoTemplate 鼠标放上去的弹窗信息（暂时没有用到）
      */
     addPointSymbol (point, symbol, attributes, infoTemplate) {
-      const returns = this.gis.addPointSymbol(point, symbol, attributes, infoTemplate)
-      this.$emit('addPointSymbolCal', returns)
+      return this.gis.addPointSymbol(point, symbol, attributes, infoTemplate)
     },
 
     /**
@@ -388,6 +410,11 @@ export default {
       this.gis.showLineBuffer(event, data, (res) => {
         this.$emit('showLineBufferCal', res)
       })
+    },
+
+    // infoWindows
+    infoWindows(flag,data){
+      this.gis.infoWindows(flag,data)
     }
   }
 

@@ -19,8 +19,8 @@ import filters from './utils/filters'
 import Api from './utils/Axios'
 
 // arcgis CSS
-import { loadCss } from 'esri-loader'
-loadCss('http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css')
+// import { loadCss } from 'esri-loader'
+// loadCss('http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css')
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

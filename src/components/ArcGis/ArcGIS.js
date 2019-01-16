@@ -88,7 +88,7 @@ export default {
         Promise.all(promiseArr).then(() => {
           window.gisServerPath = this.gisServerPath
           this.getGisApi()
-        }).catch(() => {
+        }).catch((res) => {
           this.$emit('initError', res)
         })
       }

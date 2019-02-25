@@ -18,5 +18,15 @@ export default [
       name: 'gis',
       route: '/home/gis/gis'
     }]
+  },
+  {
+    title: 'eCharts',
+    name: 'eCharts',
+    icon: 'iconfont icon-daohang',
+    menuItem: [{
+      title: 'eCharts',
+      name: 'eCharts',
+      route: '/home/e-charts'
+    }]
   }
 ]

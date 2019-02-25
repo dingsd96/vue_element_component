@@ -7,7 +7,7 @@ export default {
   },
 
   props: {
-    mapCss:{ // gisCss
+    mapCss: { // gisCss
       type: String,
       default: 'http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css'
     },
@@ -40,7 +40,7 @@ export default {
       default: () => {
         return {x: 0, y: 0}
       }
-    },
+    }
 
   },
 
@@ -56,11 +56,11 @@ export default {
         this.getGisApi()
       } else {
         // 获取css
-        let getCss =  new Promise((resolve, reject) => {
-          let head = document.getElementsByTagName('head')[0];
+        let getCss = new Promise((resolve, reject) => {
+          let head = document.getElementsByTagName('head')[0]
           let mapCss = document.createElement('link')
           mapCss.href = this.mapCss
-          mapCss.type='text/css'
+          mapCss.type = 'text/css'
           mapCss.rel = 'stylesheet'
           mapCss.onload = () => {
             resolve()
@@ -84,7 +84,7 @@ export default {
           }
         })
 
-        let promiseArr = [getCss,getScript]
+        let promiseArr = [getCss, getScript]
         Promise.all(promiseArr).then(() => {
           window.gisServerPath = this.gisServerPath
           this.getGisApi()
@@ -126,23 +126,31 @@ export default {
     },
 
     // 设置层级
-    setZoom(level){
+    setZoom (level) {
       this.gis.setZoom(level)
     },
 
     // 监听鼠标移动事件
-    mouseOver(){
-      this.gis.subscribeEvent('mouseMove',(event=>{
-        this.$emit('mouseMoveCal',event)
-      }))
+    mouseOver () {
+      this.gis.subscribeEvent('mouseMove', event => {
+        this.$emit('mouseMoveCal', event)
+      })
     },
 
     /**
      * 鹰眼图开关
-     * @param flag true:打开， false:关闭
+     * @param flag true:生成， false:销毁
      */
     overviewMap (flag) {
       this.gis.overviewMap(flag)
+    },
+
+    /**
+     * 鹰眼图开关
+     * @param flag true:显示， false:隐藏
+     */
+    overviewMapShow (flag) {
+      this.gis.overviewMapShow(flag)
     },
 
     /**
@@ -378,16 +386,16 @@ export default {
     },
 
     // 通过路名查找路的信息
-    findRoad(searchText){
-      this.gis.findRoad(searchText,res=>{
-        this.$emit('findRoadCal',res)
+    findRoad (searchText) {
+      this.gis.findRoad(searchText, res => {
+        this.$emit('findRoadCal', res)
       })
     },
 
     // 显示路的信息
-    showResultsRoad(results){
-      this.gis.showResultsRoad(results,res=>{
-        this.$emit('showResultsRoadCal',res)
+    showResultsRoad (results) {
+      this.gis.showResultsRoad(results, res => {
+        this.$emit('showResultsRoadCal', res)
       })
     },
 
@@ -413,8 +421,8 @@ export default {
     },
 
     // infoWindows
-    infoWindows(flag,data){
-      this.gis.infoWindows(flag,data)
+    infoWindows (flag, data) {
+      this.gis.infoWindows(flag, data)
     }
   }
 

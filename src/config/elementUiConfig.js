@@ -38,7 +38,8 @@ import {
   Collapse,
   CollapseItem,
   Radio,
-  RadioGroup
+  RadioGroup,
+  RadioButton
 } from 'element-ui'
 
 export default {
@@ -87,5 +88,6 @@ export default {
     Vue.use(CollapseItem)
     Vue.use(Radio)
     Vue.use(RadioGroup)
+    Vue.use(RadioButton)
   }
 }

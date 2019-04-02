@@ -6,6 +6,8 @@
       <el-switch v-model="overviewMapFlag" @change="overviewMap"></el-switch>
       <el-button @click="drawALine">画一条线</el-button>
       <el-button @click="deleteSymbol">清空</el-button>
+      <el-button @click="getArea">计算面积</el-button>
+      <el-button @click="showInfoWindow">infoWindow</el-button>
       <br/><el-button @click="pointClustering">聚合图层</el-button>
     </div>
     <Gis ref="gis"

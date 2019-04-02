@@ -39,6 +39,11 @@ export default new Router({
           component: () => import('../view/home/gis')
         },
         {
+          path: 'gis4x/gis4x',
+          name: 'gis4x',
+          component: () => import('../view/home/gis4x/index.vue')
+        },
+        {
           path: 'e-charts',
           name: 'gis',
           component: () => import('../view/home/eCharts/index.vue')

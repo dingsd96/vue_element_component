@@ -1,7 +1,12 @@
 <template>
   <div class="e-charts-wrapper">
     <div ref="eCharts1" class="charts-content"></div>
-    <el-button @click="currentChartsClick">{{ worldCharts ? '世界' : '中国' }}</el-button>
+    <div class="buttons">
+      <el-radio-group v-model="map" size="small" @change="radioChange">
+        <el-radio-button label="1">世界地图</el-radio-button>
+        <el-radio-button label="2">中国地图</el-radio-button>
+      </el-radio-group>
+    </div>
   </div>
 </template>
 
@@ -13,76 +18,27 @@ export default {
   name: 'index',
   data () {
     return {
-      worldCharts: true,
+      map: '1',
       chart1: {}
     }
   },
 
   mounted () {
-    this.init()
+    this.init(this.map)
   },
 
   methods: {
-    init () {
+    init (data) {
       this.chart1 = ECharts.init(this.$refs['eCharts1'])
-      this.setOptions2()
+      if (data === '1') {
+        this.setOptions1()
+      } else if (data === '2') {
+        this.setOptions2()
+      }
     },
 
+    // 世界地图
     setOptions1 () {
-      let value3 = [
-        {name: '美国', value: 87},
-        {name: '中国', value: 38},
-        {name: '英国', value: 40},
-        {name: '瑞士', value: 21},
-        {name: '秘鲁', value: 21},
-        {name: '德国', value: 15},
-        {name: '意大利', value: 13},
-        {name: '澳大利亚', value: 11},
-        {name: '玻利维亚', value: 11},
-        {name: '西班牙', value: 9},
-        {name: '印度', value: 7},
-        {name: '日本', value: 7},
-        {name: '阿根廷', value: 6},
-        {name: '荷兰', value: 6},
-        {name: '法国', value: 5},
-        {name: '土耳其', value: 4},
-        {name: '以色列', value: 4},
-        {name: '比利时', value: 4},
-        {name: '吉尔吉斯斯坦', value: 4},
-        {name: '墨西哥', value: 4},
-        {name: '哥斯达黎加', value: 3},
-        {name: '奥地利', value: 3},
-        {name: '瑞典', value: 3},
-        {name: '丹麦', value: 3},
-        {name: '尼加拉瓜', value: 2},
-        {name: '芬兰', value: 2},
-        {name: '尼日利亚', value: 2},
-        {name: '捷克共和国', value: 2},
-        {name: '韩国', value: 2},
-        {name: '挪威', value: 2},
-        {name: '新加坡', value: 2},
-        {name: '新西兰', value: 1},
-        {name: '科威特', value: 1},
-        {name: '塞尔维亚', value: 1},
-        {name: '尼泊尔', value: 1},
-        {name: '菲律宾', value: 1},
-        {name: '葡萄牙', value: 1},
-        {name: '希腊', value: 1},
-        {name: '巴基斯坦', value: 1},
-        {name: '古巴', value: 1},
-        {name: '巴西', value: 1},
-        {name: '冰岛', value: 1},
-        {name: '埃及', value: 1},
-        {name: '乌兹别克斯坦', value: 1},
-        {name: '约旦', value: 1},
-        {name: '波兰', value: 1},
-        {name: '哥伦比亚', value: 1},
-        {name: '萨尔瓦多', value: 1},
-        {name: '塞浦路斯', value: 1},
-        {name: '俄罗斯', value: 1},
-        {name: '沙特阿拉伯', value: 1},
-        {name: '坦桑尼亚', value: 1}
-      ]
       let nameMap = {
         'Afghanistan': '阿富汗',
         'Singapore': '新加坡',
@@ -263,6 +219,18 @@ export default {
         'Zambia': '赞比亚',
         'Zimbabwe': '津巴布韦'
       }
+      let planePath = 'path://M1705.06,1318.313v-89.254l-319.9-221.799l0.073-208.063c0.521-84.662-26.629-121.796-63.961-121.491c-37.332-0.305-64.482,36.829-63.961,121.491l0.073,208.063l-319.9,221.799v89.254l330.343-157.288l12.238,241.308l-134.449,92.931l0.531,42.034l175.125-42.917l175.125,42.917l0.531-42.034l-134.449-92.931l12.238-241.308L1705.06,1318.313z'
+
+      let data = [
+        {name: '纽约市'},
+        {name: '北京市'}
+      ]
+      let dataFrom = '北京市'
+      let geoCoordMap = {
+        '纽约市': [73.5500, 40.4400],
+        '北京市': [116.4551, 40.2539]
+      }
+
       let option = {
         timeline: {
           axisType: 'category',
@@ -278,13 +246,6 @@ export default {
           data: ['2016']
         },
         baseOption: {
-          visualMap: {
-            max: 100,
-            calculable: true,
-            inRange: {
-              color: ['#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
-            }
-          },
           series: [{
             type: 'map',
             map: 'world',
@@ -292,23 +253,69 @@ export default {
             nameMap: nameMap
           }]
         },
-        options: [{
-          title: {
-            text: 'SCI国家数据频率',
-            subtext: '世界分布图',
-            left: 'center',
-            top: 'top'
+        geo: {
+          map: 'china',
+          zoom: 1.2,
+          label: { // 文字样式
+            normal: { // 省份名字默认情况
+              show: true,
+              color: '#000000'
+            },
+            emphasis: { // 省份名字hover情况
+              show: false,
+              color: '#ffffff'
+            }
           },
-          series: {
-            data: value3
+          roam: true,
+          itemStyle: { // 填充样式
+            normal: { // 默认
+              areaColor: '#ffffff',
+              borderColor: '#b9b4b7'
+            },
+            emphasis: { // 填充
+              areaColor: '#05ff09'
+            }
           }
-        } ]
+        }, // 地图样式设置
+        series: [
+          {
+            name: '北京-纽约',
+            type: 'lines',
+            zlevel: 2,
+            symbolSize: 10,
+            effect: {
+              show: true,
+              period: 6,
+              symbol: planePath,
+              trailLength: 0,
+              symbolSize: 15
+            },
+            lineStyle: {
+              normal: {
+                color: '#c60fff',
+                width: 2, // 宽度
+                opacity: 0.5, // 透明度
+                curveness: 0.2 // 弧度
+              }
+            },
+            data: data.map(function (dataItem) {
+              return {
+                fromName: dataFrom,
+                toName: dataItem.name,
+                coords: [ // 飞机的起始点和终点
+                  geoCoordMap[dataFrom],
+                  geoCoordMap[dataItem.name]
+                ]
+              }
+            })
+          }
+        ] // 关于线路
       }
 
       this.chart1.setOption(option)
-      this.worldCharts = true
     },
 
+    // 中国地图
     setOptions2 () {
       function randomData () {
         return Math.round(Math.random() * 100)
@@ -349,26 +356,24 @@ export default {
           subtext: '中国的八大区分布',
           itemGap: 30,
           left: 'center',
-          textStyle: { // 主标题样式
+          textStyle: {
             color: '#1a1b4e',
             fontStyle: 'normal',
             fontWeight: 'bold',
             fontSize: 30
-          },
+          }, // 主标题样式
 
-          subtextStyle: { // 副标题样式
+          subtextStyle: {
             color: '#58d9df',
             fontStyle: 'normal',
             fontWeight: 'bold',
             fontSize: 16
-          }
+          } // 副标题样式
         },
-
         tooltip: {
           trigger: 'item'
         },
-
-        visualMap: { // 左下角的那个
+        visualMap: {
           min: 0,
           max: 100,
           left: 'left',
@@ -378,8 +383,8 @@ export default {
           inRange: {
             color: ['#ffffff', '#E0DAFF', '#ADBFFF', '#9CB4FF', '#6A9DFF', '#3889FF']
           }
-        },
-        toolbox: { // 最右侧那三个按钮
+        }, // 左下角的那个
+        toolbox: {
           show: true,
           orient: 'vertical',
           left: 'right',
@@ -391,8 +396,7 @@ export default {
             restore: {},
             saveAsImage: {}
           }
-        },
-
+        }, // 最右侧那三个功能按钮
         geo: {
           map: 'china',
           zoom: 1.2,
@@ -416,8 +420,8 @@ export default {
               areaColor: '#05ff09'
             }
           }
-        },
-        series: [ // 关于线路
+        }, // 地图样式设置
+        series: [
           {
             name: '北京-重庆',
             type: 'lines',
@@ -501,18 +505,16 @@ export default {
                 value: randomData()
               }]
           }
-        ]
+        ] // 关于线路
       }
 
       this.chart1.setOption(option)
-
-      this.worldCharts = false
     },
 
-    currentChartsClick () {
+    // 切换地图
+    radioChange (data) {
       this.chart1.dispose()
-      this.chart1 = ECharts.init(this.$refs['eCharts1'])
-      this.worldCharts ? this.setOptions2() : this.setOptions1()
+      this.init(data)
     }
   }
 }
@@ -525,7 +527,13 @@ export default {
     background-color: #ffffff;
     .charts-content{
       width: 100%;
-      height: calc(100% - 50px);
+      height: calc(100% - 80px);
+    }
+    .buttons{
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 </style>

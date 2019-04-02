@@ -3,6 +3,6 @@
 </template>
 
 <script>
-import ArcGIS from './ArcGIS.js'
-export default ArcGIS
+  import ArcGIS from './ArcGIS.js'
+  export default ArcGIS
 </script>

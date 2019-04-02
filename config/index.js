@@ -6,7 +6,6 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -17,7 +16,14 @@ module.exports = {
         pathRewrite: {
           '^/apis': ''
         }
-      }
+      },
+      '/gis': {
+        target: 'http://192.168.2.34:83',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/gis': ''
+        }
+      },
     },
 
     // Various Dev Server settings
@@ -31,7 +37,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
-    useEslint: true,
+    useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
     showEslintErrorsInOverlay: false,
@@ -48,7 +54,7 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: false
   },
 
   build: {

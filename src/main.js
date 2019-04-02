@@ -18,9 +18,8 @@ import filters from './utils/filters'
 // Axios
 import Api from './utils/Axios'
 
-// arcgis CSS
-// import { loadCss } from 'esri-loader'
-// loadCss('http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css')
+// arcGis
+// dojoConfig
 
 Vue.config.productionTip = false
 Vue.use(ElementUI)

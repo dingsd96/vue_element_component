@@ -9,19 +9,19 @@ export default {
   props: {
     mapCss: { // gisCss
       type: String,
-      default: 'http://192.168.2.36:83/arcGis3.24/3.24/esri/css/esri.css'
+      default: 'http://192.168.2.36:83/arcGIS/3.24/esri/css/esri.css'
     },
     gisURL: { // gisApi文件路径
       type: String,
-      default: 'http://192.168.2.178:83/arcGis3.24/3.24/main.js'
+      default: 'http://192.168.2.36:83/arcGis3.24/3.24/main.js'
     },
     gisServerPath: { // gis服务
       type: String,
-      default: 'http://192.168.2.178:83/arcGis3.24'
+      default: 'http://192.168.2.36:83/arcGis3.24'
     },
     MapService: { // 地图服务路径
       type: String,
-      default: 'http://192.168.2.178:6080/arcgis/rest/services/gzMap18/MapServer'
+      default: 'http://192.168.2.36:6080/arcgis/rest/services//gzmap18wz/MapServer'
     },
     GeometryService: { // 辐射工具服务路径
       type: String,
@@ -162,6 +162,11 @@ export default {
       return this.gis.mercator2LatLng(mercator)
     },
 
+    // 经纬度转墨卡托
+    latLng2Mercator (latlng) {
+      return this.gis.latLng2Mercator(latlng)
+    },
+
     /**
      * 根据经纬度定位
      * const Obj = {longitude:Number, latitude:Number}
@@ -182,6 +187,11 @@ export default {
     getDistance (point1, point2) {
       const returns = this.gis.getDistance(point1.latitude, point1.longitude, point2.latitude, point2.longitude)
       this.$emit('getDistanceCal', returns)
+    },
+
+    // 计算面积
+    getArea (polygon, acres) {
+      return this.gis.getArea(polygon, acres)
     },
 
     /**
@@ -272,8 +282,8 @@ export default {
      * @param infoTemplate 鼠标放上去的弹窗信息（暂时没有用到）
      */
     addAreaSymbol (points, symbol, attributes, infoTemplate) {
-      const returns = this.gis.addAreaSymbol(points, symbol, attributes, infoTemplate)
-      this.$emit('addAreaSymbolCal', returns)
+      return this.gis.addAreaSymbol(points, symbol, attributes, infoTemplate)
+      // this.$emit('addAreaSymbolCal', returns)
     },
 
     /**
